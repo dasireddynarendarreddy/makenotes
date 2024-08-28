@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+
 import reportWebVitals from './reportWebVitals';
-import { PDFViewer } from '@react-pdf/renderer';
-import ReactPDF from '@react-pdf/renderer';
-import Pdf from './Pdf';
+
+
 import Ui from './Ui';
-import TemporaryDrawer from './Side';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Ui/>

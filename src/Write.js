@@ -113,7 +113,7 @@ export default function Write()
       <div>
       {selectednotes.length>0?<Button onClick={deleteNotes} className='lg:bg-red-500 p-2 rounded-lg hover:bg-sky-300'>Delete<DeleteIcon/></Button>:" "}
       {selectednotes.length>=2?<Button className='bg-sky-500 p-2 rounded-lg hover:bg-sky-300' onClick={MergeTwoNotes}>Merge<MergeIcon/></Button>:" "}
-      {selectednotes.length==1?<Button className='bg-sky-500 p-2 rounded-lg hover:bg-sky-300' onClick={EditNotes}>EditNotes<EditIcon/></Button>:" "}
+      {selectednotes.length===1?<Button className='bg-sky-500 p-2 rounded-lg hover:bg-sky-300' onClick={EditNotes}>EditNotes<EditIcon/></Button>:" "}
       </div>
      </Box>
      )
