@@ -1,0 +1,42 @@
+#filters {
+    padding: 10px;
+    background-color: rgb(91, 67, 67);
+    position: fixed;
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    
+  }
+  
+  #filters div {
+    display: flex;
+    align-items: center;
+  }
+  
+  #filters h4 {
+    margin: 0;
+    color: white;
+    text-align: center;
+    width: 100%;
+  }
+  
+  #filters button {
+    padding: 8px 16px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+  }
+  
+  #filters button:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+  }
+  
