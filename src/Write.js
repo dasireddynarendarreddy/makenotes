@@ -14,6 +14,9 @@ import ListItemText from '@mui/material/ListItemText';
 import MergeIcon from '@mui/icons-material/Merge';
 import EditIcon from '@mui/icons-material/Edit';
 import ViewSidebarRoundedIcon from '@mui/icons-material/ViewSidebarRounded';
+import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+
 export default function Write()
 {
     const[char,setchar]=useState('')
@@ -21,7 +24,11 @@ export default function Write()
     const [open, setOpen] = React.useState(false);
     const[notes,setnotes]=useState([])
     const[selectednotes,checkednotes]=useState([])
+    const[notescreated,setNotesCreated]=useState(false)
+    const[merge,setmerge]=useState([])
+    const navigate=useNavigate()
     console.log(selectednotes)
+    console.log("mergenotes",merge)
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -33,20 +40,24 @@ export default function Write()
        if(selectednotes.indexOf(val)===-1)
        {
          checkednotes((pre)=>[...pre,val])
+         setmerge((pre)=>[...pre,val]);
        }
     }
     else{
       
       const index=selectednotes.indexOf(val);
+      const notesInMerge=merge.indexOf(val);
 
       
       selectednotes.splice(index,1);
+      merge.splice(notesInMerge,1);
       
 
       
       
     }
     console.log(selectednotes)
+    console.log(merge)
     
    
 
@@ -63,6 +74,7 @@ export default function Write()
     setnotes(res)
   }
   const deleteNotes=()=>{
+    navigate(0)
        for(var i=0;i<selectednotes.length;i++)
        {
         localStorage.removeItem(selectednotes[i])
@@ -76,12 +88,17 @@ export default function Write()
   
   }
   const MergeTwoNotes=()=>{
-    
-      const item1=localStorage.getItem(selectednotes[0])
-      const item2=localStorage.getItem(selectednotes[1])
-      const res=item1+item2
-      localStorage.setItem(selectednotes[0],res)
-      localStorage.removeItem(selectednotes[1])
+       const items=merge.map(d=>localStorage.getItem(d))
+       let content=''
+      for(var i=0;i<items.length;i++)
+      {
+        content+=localStorage.getItem(merge[i])
+        localStorage.removeItem(merge[i])
+        
+      }
+      localStorage.setItem("finalnotes",content)
+      
+      
 
     
 
@@ -137,7 +154,11 @@ export default function Write()
         }
         else{
           localStorage.setItem(notesname,char);
+          setNotesCreated(true)
           toast("notes created")
+          navigate(0);
+          
+
         }
         setnotes(res)
         setNotesName("")
@@ -151,6 +172,11 @@ export default function Write()
     }
     
     return(
+      <>{notescreated?
+          <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+    :
         <div className="p-4">
             <Button onClick={toggleDrawer(true)}><ViewSidebarRoundedIcon/></Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
@@ -165,8 +191,12 @@ export default function Write()
             <input type="text" className="rounded-lg border-2 border-black" value={notesname} onChange={(e)=>setNotesName(e.target.value)} required/>
             </div>
         <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-screen" placeholder="Write your book..." value={char} onChange={(e)=>setchar(e.target.value)}></textarea>
-        <button type="button" className={char.length?"px-8 py-3 text-white bg-sky-500 rounded focus:outline-none cursor-pointer":"px-8 py-3 text-white bg-gray-300 rounded focus:outline-none cursor-not-allowed"} disabled={char.length>0?"":"disabled "} onClick={saveNotes}>Button
+        <button type="button" className={char.length?"px-8 py-3 text-white bg-sky-500 rounded focus:outline-none cursor-pointer":"px-8 py-3 text-white bg-gray-300 rounded focus:outline-none cursor-not-allowed"} disabled={char.length>0?"":"disabled "} onClick={saveNotes}>saveNotes
 </button>
         </div>
+         
+      }
+      
+      </>
     )
 }

@@ -13,8 +13,55 @@ export default function Books()
 
     },[])
     const downloadPdf=(notesname)=>{
-        const pdf=new jsPDF();
+        /*const pdf=new jsPDF();
         pdf.text(localStorage.getItem(notesname),10,10)
+        let text = localStorage.getItem(notesname);
+let splitText = pdf.splitTextToSize(text, 180);
+let yOffset = 10;
+
+splitText.forEach(line => {
+    if (yOffset > 280) {  // Assuming 280 is near the bottom of the page
+        pdf.addPage();
+        yOffset = 10;
+    }
+    pdf.text(line, 10, yOffset);
+    yOffset += 10;  // Adjust spacing between lines
+});*/
+
+const pdf = new jsPDF();
+
+// Retrieve the text from localStorage
+let text = localStorage.getItem(notesname);
+
+// Set the font size for the PDF
+pdf.setFontSize(12);
+
+// Define the maximum width for the text
+const pageWidth = pdf.internal.pageSize.getWidth();
+const margin = 10;
+const maxWidth = pageWidth - 2 * margin;
+
+// Split the text into lines that fit within the defined width
+let splitText = pdf.splitTextToSize(text, maxWidth);
+
+// Set the initial y-coordinate for the text placement
+let yOffset = 20;
+
+// Loop through the split text lines and add them to the PDF
+splitText.forEach((line, index) => {
+    // Check if the current yOffset is beyond the page height, then add a new page
+    if (yOffset > pdf.internal.pageSize.getHeight() - margin) {
+        pdf.addPage();
+        yOffset = margin; // Reset yOffset for the new page
+    }
+    pdf.text(line, margin, yOffset);
+    yOffset += 10; // Adjust line height for the next line
+});
+
+// Save the PDF
+
+
+
         pdf.save(notesname)
 
 
