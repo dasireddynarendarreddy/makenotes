@@ -2,6 +2,8 @@ import { Button } from '@mui/material'
 import {useEffect,useState} from 'react'
 import DownloadIcon from '@mui/icons-material/Download';
 import { jsPDF } from "jspdf";
+import { Link } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export default function Books()
 {
     const[data,setdata]=useState([])
@@ -67,8 +69,10 @@ splitText.forEach((line, index) => {
 
     }
     return(
-        <div className='flex gap-2'>
-                  {
+        <div>
+               <Link to="/"><ArrowBackIcon/></Link>
+               <div className='flex gap-2'>
+                  {data.length===0?<h1>NO NOTES HERE</h1>:
                     data.map((d,i)=>(
                         <div key={d} className='shadow-md w-auto h-auto text-center shadow-indigo-500/40 p-2'>
                                         
@@ -76,7 +80,9 @@ splitText.forEach((line, index) => {
                             <Button onClick={()=>downloadPdf(d)}>Downlaod<DownloadIcon/></Button>
                         </div>
                     ))
+                
                   }   
+                  </div>
         </div>
     )
 }
