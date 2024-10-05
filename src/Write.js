@@ -5,14 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import List from '@mui/material/List';
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import { ListItem } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ListItemText from '@mui/material/ListItemText';
 import MergeIcon from '@mui/icons-material/Merge';
 import EditIcon from '@mui/icons-material/Edit';
-import ViewSidebarRoundedIcon from '@mui/icons-material/ViewSidebarRounded';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
@@ -43,7 +44,6 @@ export default function Write(){
     const [openAlert, setOpenAlert] = React.useState(false);
     const navigate = useNavigate();
     const [nameToMerge, setMergeNotesName] = useState('');
-    
   const [audioUrl, setAudioUrl] = useState('');
  
   const synthesizeSpeech = () => {
@@ -209,7 +209,7 @@ export default function Write(){
                 </Box>
                 :
                 <div className="p-4">
-                    <Button onClick={toggleDrawer(true)}><ViewSidebarRoundedIcon/></Button>
+                    <Button onClick={toggleDrawer(true)}><DensityMediumIcon/></Button>
                     <Drawer open={open} onClose={toggleDrawer(false)}>
                         {DrawerList}
                     </Drawer>
@@ -217,7 +217,7 @@ export default function Write(){
                     <span>no of characters: {char.length}</span>
                     
                     
-                    <button onClick={synthesizeSpeech}>Synthesize Speech</button>
+                    <button onClick={synthesizeSpeech} className='bg-blue-600 rounded-lg p-2'>ReadBook<VolumeUpIcon/></button>
       {audioUrl && <audio controls src={audioUrl} />}
 
                     <br/>
